@@ -1,0 +1,44 @@
+Rows: 240 total -> 168 train / 72 test (seed=42)
+
+=== Full model (all 5 features), training set ===
+                    coef    std_err        t  p_value
+Intercept     21698.6292  1093.2793  19.8473   0.0000
+Mileage_K       -78.5928    13.8786  -5.6629   0.0000
+Age_Years     -1300.6404   185.0745  -7.0277   0.0000
+Horsepower       75.0158     4.7474  15.8013   0.0000
+Accident_Yes  -2171.7835   511.5604  -4.2454   0.0000
+Num_Owners       62.9248   370.4891   0.1698   0.8653
+R² = 0.8730   adj R² = 0.8691   residual SE = $2,649
+
+=== Reduced model (dropped ['Num_Owners']), training set ===
+                    coef    std_err        t  p_value
+Intercept     21762.3980  1023.7231  21.2581      0.0
+Mileage_K       -78.1533    13.5945  -5.7489      0.0
+Age_Years     -1291.6311   176.7809  -7.3064      0.0
+Horsepower       75.0204     4.7332  15.8498      0.0
+Accident_Yes  -2176.6377   509.2375  -4.2743      0.0
+R² = 0.8730   adj R² = 0.8698   residual SE = $2,641
+
+Chosen v1 features: ['Mileage_K', 'Age_Years', 'Horsepower', 'Accident_Yes']  (training adj R² = 0.8698)
+
+v1 coefficients in dollars:
+  Mileage_K     -78
+  Age_Years     -1,292
+  Horsepower    +75
+  Accident_Yes  -2,177
+
+Baseline prediction for every car = training average = $25,851
+
+=== Fit on the 72 held-out test cars ===
+                      R2_test  RMSE_test_$
+Baseline (train avg)   -0.014     6494.154
+v1 regression           0.823     2716.143
+
+=== 40 auction lots: decision rule results ===
+               cars_bought  money_losing_bought  total_profit_$  avg_profit_per_car_$
+Baseline rule         14.0                 10.0         -6000.0                -429.0
+v1 rule               17.0                  6.0         15800.0                 929.0
+(Reference — perfect hindsight: buy 12 cars, profit $21,500)
+v1 minus baseline total profit at this auction: $21,800.0
+
+Outputs written to /home/claude/car/output
